@@ -14,6 +14,24 @@ public class ItemData {
     String location;
     String type;
     int id;
+    double longitude;
+    double latitude;
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(float longitude) {
+        this.longitude = longitude;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(float latitude) {
+        this.latitude = latitude;
+    }
 
     public int getId() {
         return id;
@@ -72,7 +90,7 @@ public class ItemData {
         this.type = type;
     }
 
-    public ItemData(String name, String phone, String description, String date, String location, String type, int ID) {
+    public ItemData(String name, String phone, String description, String date, String location, String type, int ID, double longitude, double latitude) {
         this.name = name;
         this.phone = phone;
         this.description = description;
@@ -80,5 +98,7 @@ public class ItemData {
         this.location = location;
         this.type = type;
         this.id = ID;
+        this.longitude = longitude;
+        this.latitude = latitude;
     }
 }

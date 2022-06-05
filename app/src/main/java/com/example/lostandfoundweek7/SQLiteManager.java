@@ -16,7 +16,7 @@ public class SQLiteManager extends SQLiteOpenHelper {
     private static SQLiteManager sqLiteManager;
     private static final String DATABASE_NAME = "LostFoundDB";
     private static final int DATABASE_VERSION = 1;
-    private static final String TABLE_NAME = "LOSTANDFOUND";
+    private static final String TABLE_NAME = "ITEMLOSTFOUND";
     private static final String ID_FIELD = "id";
     private static final String NAME_FIELD = "name";
     private static final String PHONE_FIELD = "phone";
@@ -24,6 +24,8 @@ public class SQLiteManager extends SQLiteOpenHelper {
     private static final String DATE_FIELD = "date";
     private static final String LOCATION_FIELD = "location";
     private static final String POST_TYPE = "type";
+    private static final String LONGITUDE_FIELD = "longitude";
+    private static final String LATITUDE_FIELD = "latitude";
 
     public SQLiteManager(Context context)
     {
@@ -60,7 +62,12 @@ public class SQLiteManager extends SQLiteOpenHelper {
                 .append(LOCATION_FIELD)
                 .append(" TEXT, ")
                 .append(POST_TYPE)
-                .append(" TEXT)");
+                .append(" TEXT, ")
+                .append(LONGITUDE_FIELD)
+                .append(" REAL, ")
+                .append(LATITUDE_FIELD)
+                .append(" REAL)");
+
 
         db.execSQL(sql.toString());
     }
@@ -82,7 +89,8 @@ public class SQLiteManager extends SQLiteOpenHelper {
         contentValues.put(DATE_FIELD, item.getDate());
         contentValues.put(LOCATION_FIELD, item.getLocation());
         contentValues.put(POST_TYPE, item.getType());
-
+        contentValues.put(LONGITUDE_FIELD, item.getLongitude());
+        contentValues.put(LATITUDE_FIELD, item.getLatitude());
         sqLiteDatabase.insert(TABLE_NAME, null, contentValues);
     }
 
@@ -102,7 +110,9 @@ public class SQLiteManager extends SQLiteOpenHelper {
                     String date = result.getString(4);
                     String location = result.getString(5);
                     String type = result.getString(6);
-                    ItemData item = new ItemData(name, phone, description, date, location, type, id);
+                    double longitude = result.getDouble(7);
+                    double latitude = result.getDouble(8);
+                    ItemData item = new ItemData(name, phone, description, date, location, type, id, longitude, latitude);
                     if (!ItemData.itemList.contains(item))
                     {
                         ItemData.itemList.add(item);
